@@ -7,7 +7,7 @@
     @vite(['resources/css/app.css'])
     @vite(['resources/js/app.js'])
 </head>
-<body class="bg-black text-white min-h-screen flex flex-col">
+<body class="bg-black">
 
 <!-- Header -->
 @include('layouts.header')

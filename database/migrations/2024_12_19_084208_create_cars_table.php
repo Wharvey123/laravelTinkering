@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->string('make'); // Marca
             $table->string('model'); // Model
             $table->integer('year'); // Any de producció
-            $table->decimal('price', 10, 2); // Preu amb decimals
+            $table->float('price', 10, 2); // Preu amb decimals
             $table->text('description'); // Descripció
             $table->timestamps(); // Camps created_at i updated_at
         });

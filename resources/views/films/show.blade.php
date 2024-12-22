@@ -99,8 +99,8 @@
             <div class="film-content">
                 <h1 class="film-title">{{ $film['name'] }}</h1>
                 <p class="film-details"><strong>Director:</strong> {{ $film['director'] }}</p>
-                <p class="film-details"><strong>Year:</strong> {{ $film['year'] }}</p>
-                <p class="film-details"><strong>Description:</strong> {{ $film['description'] }}</p>
+                <p class="film-details"><strong>Any:</strong> {{ $film['year'] }}</p>
+                <p class="film-details"><strong>Descripció:</strong> {{ $film['description'] }}</p>
                 <a href="/films" class="back-button">Back to Films</a>
             </div>
             <img id="posterImage" src="" alt="Movie Poster" class="film-poster">

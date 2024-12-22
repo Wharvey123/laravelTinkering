@@ -7,26 +7,17 @@ use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $cars = Car::all();
-        return view('cars.index', compact('cars'));
+        $cars = Car::all(); // Fetch all cars
+        return view('cars.index', compact('cars')); // Pass data to the view
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view('cars.create');
+        return view('cars.create'); // Render the create car form
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -37,31 +28,22 @@ class CarController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        Car::create($request->all());
+        Car::create($request->all()); // Save the car data
         return redirect()->route('cars.index')->with('success', 'Car created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        $car = Car::findOrFail($id);
-        return view('cars.show', compact('car'));
+        $car = Car::findOrFail($id); // Find the car or throw a 404 error
+        return view('cars.show', compact('car')); // Pass the single car to the view
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        $car = Car::findOrFail($id);
-        return view('cars.edit', compact('car'));
+        $car = Car::findOrFail($id); // Find the car for editing
+        return view('cars.edit', compact('car')); // Pass the car data to the view
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -72,30 +54,24 @@ class CarController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        $car = Car::findOrFail($id);
-        $car->update($request->all());
+        $car = Car::findOrFail($id); // Find the car to update
+        $car->update($request->all()); // Update car data
         return redirect()->route('cars.index')->with('success', 'Car updated successfully.');
     }
 
-    /**
-     * Show the confirmation form for deleting the specified resource.
-     */
     public function confirmDelete(string $id)
     {
-        $car = Car::findOrFail($id);
-        return view('cars.delete', compact('car'));
+        $car = Car::findOrFail($id); // Find the car for deletion confirmation
+        return view('cars.delete', compact('car')); // Pass the car data to the delete view
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Request $request, string $id)
     {
-        $car = Car::findOrFail($id);
+        $car = Car::findOrFail($id); // Find the car to delete
 
         // Protect against CSRF and ensure it is a DELETE request
         if ($request->isMethod('delete')) {
-            $car->delete();
+            $car->delete(); // Delete the car
             return redirect()->route('cars.index')->with('success', 'Car deleted successfully.');
         }
 

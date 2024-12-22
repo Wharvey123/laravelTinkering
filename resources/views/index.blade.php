@@ -2,114 +2,113 @@
 
 @section('content')
     <style>
-        h1 {
-            font-family: 'Chakra Petch', sans-serif; /* Apply Chakra Petch font */
-            font-size: 4.5rem;
-            line-height: 1;
-            font-weight: 700; /* Bold font */
-        }
-
-        /* Adjustments for content to be visible over the background */
-        .content-wrapper {
-            position: relative;
-            z-index: 2;
-        }
-
-        .box {
-            width: 200px; /* Augmentem l'amplada */
-            height: 120px; /* Augmentem l'altura */
-            float: left;
-            transition: .5s linear;
-            position: relative;
-            display: flex; /* Flexbox per centrar */
-            align-items: center; /* Centrat vertical */
-            justify-content: center; /* Centrat horitzontal */
-            overflow: hidden;
-            padding: 20px; /* Ajustem el padding */
-            text-align: center;
-            margin: 0 10px;
-            background: transparent;
-            text-transform: uppercase;
-            font-weight: 900;
-            font-size: 1.2rem; /* Augmentem la mida del text */
-            z-index: 3; /* Make sure buttons are on top of the background */
-        }
-
-        .box:before {
-            position: absolute;
-            content: '';
-            left: 0;
-            bottom: 0;
-            height: 6px; /* Augmentem l'altura del contorn */
-            width: 100%;
-            box-sizing: border-box;
-            transform: translateX(100%);
-        }
-
-        .box:after {
-            position: absolute;
-            content: '';
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 6px; /* Augmentem l'altura del contorn */
-            box-sizing: border-box;
-            transform: translateX(-100%);
-        }
-
-        .box:hover {
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7); /* Augmentem l'ombra */
-        }
-
-        .box:hover:before {
-            height: 100%;
-            transform: translateX(0);
-            transition: .3s transform linear, .3s height linear .3s;
-        }
-
-        .box:hover:after {
-            height: 100%;
-            transform: translateX(0);
-            transition: .3s transform linear, .3s height linear .5s;
-        }
-
-        a {
-            display: block; /* Tota l'àrea clicable */
-            text-decoration: none; /* Traiem el subratllat */
-            color: inherit; /* Heretem el color del text */
-        }
-
-        i {
-            margin: 0; /* Ens assegurem que no hi ha espai extra */
-        }
-
-        body {
+        /* Apply to html and body to prevent unwanted horizontal scroll */
+        html, body {
             margin: 0;
-            overflow: hidden;
-            position: relative;
-            z-index: 1;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            height: 100%;
         }
 
-        header, footer {
-            position: relative;
-            z-index: 10; /* Ensure the header and footer are above the background */
+        .container {
+            width: 100%;
+            height: 100%;
         }
 
-        .content-wrapper {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* WebGL background canvas */
+        /* Adjust canvas to be responsive */
         #webgl-canvas {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1; /* Ensure the canvas stays behind the content */
+            width: 100vw; /* Use full viewport width */
+            height: 100vh; /* Use full viewport height */
         }
 
+        /* Make sure content stays within viewport */
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+            overflow: hidden; /* Ensure content fits inside the container */
+            padding-bottom: 60px; /* Add padding to avoid footer overlap */
+        }
+
+        .box {
+            width: 20vw; /* Adjust box width to be responsive */
+            max-width: 200px; /* Prevent excessive size on large screens */
+            height: 15vw; /* Adjust height to be responsive */
+            max-height: 120px; /* Prevent excessive height */
+            float: left;
+            transition: .5s linear;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            text-align: center;
+            margin: 0 5px;
+            background: transparent;
+            text-transform: uppercase;
+            font-weight: 900;
+            font-size: 1.2rem;
+            z-index: 3;
+        }
+
+        /* Ensure the header and footer are properly stacked on mobile */
+        header, footer {
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 4.5rem;
+            line-height: 1;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-align: center; /* Ensure it's centered */
+        }
+
+        /* Responsive text sizes for smaller screens */
+        h1.text-red-600 {
+            font-size: 4rem; /* Increase size for larger screens */
+        }
+
+        @media (max-width: 768px) {
+            h1.text-red-600 {
+                font-size: 3rem; /* Smaller font size for mobile screens */
+            }
+
+            .box {
+                font-size: 1rem; /* Adjust font size of the box */
+            }
+
+            footer {
+                position: static; /* Make footer appear at the bottom in mobile */
+            }
+        }
+
+        /* Flexbox container adjustment for smaller screens */
+        .flex {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            flex-wrap: wrap; /* Allow the items to wrap on smaller screens */
+        }
+
+        /* Ensure footer is at the bottom */
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            z-index: 10;
+            height: 60px; /* Define a specific height */
+        }
+
+        /* Prevent footer from causing unnecessary scroll */
+        .content-wrapper {
+            min-height: calc(100vh - 60px); /* Adjust based on footer height */
+        }
     </style>
 
     <!-- WebGL background canvas -->
@@ -158,14 +157,14 @@
             <!-- Main text size increased and red text applied -->
             <div class="flex justify-center space-x-8">
                 <a href="{{ route('films.index') }}">
-                <span class="box">
-                    <i class="fas fa-film fa-3x text-red-600"></i>
-                </span>
+                    <span class="box">
+                        <i class="fas fa-film fa-3x text-red-600 sm:fa-2x md:fa-3x"></i>
+                    </span>
                 </a>
                 <a href="{{ route('cars.index') }}">
-                <span class="box">
-                    <i class="fas fa-car fa-3x text-red-600"></i>
-                </span>
+                    <span class="box">
+                        <i class="fas fa-car fa-3x text-red-600 sm:fa-2x md:fa-3x"></i>
+                    </span>
                 </a>
             </div>
         </div>
